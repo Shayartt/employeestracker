@@ -1,0 +1,12 @@
+Project Idea: Real-time ingestion of employées informations (Activity + location)  and monitoring.
+
+## Technology used :
+
+    - Apache Iceberg ( AWS Glue + Athena) with S3 as storage system.
+    - Kafka Connect for data ingestion.
+    - Spark (EMR) for pipelines.
+    - OpenSearch for logs.
+
+### Credits : 
+
+Apache Kafka Installation : https://www.conduktor.io/kafka/how-to-install-apache-kafka-on-linux/
