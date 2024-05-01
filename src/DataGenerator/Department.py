@@ -25,7 +25,7 @@ class Department:
         """
         Generate list of possible job titles for the department
         """
-        return possible_jobs[self.name].value
+        return possible_jobs[self.name.upper()].value
     
     def get_random_job_title(self):
         """

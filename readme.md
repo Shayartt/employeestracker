@@ -6,6 +6,7 @@ Project Idea: Streaming employees informations (Activity + location), apply ETL 
     - Kafka Connect for data ingestion.
     - Spark (EMR) for pipelines.
     - OpenSearch for logs.
+	- Kibana for visualization.
 
 ### Credits : 
 
