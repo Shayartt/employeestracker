@@ -1,4 +1,4 @@
-Project Idea: Real-time ingestion of employées informations (Activity + location)  and monitoring.
+Project Idea: Streaming employees informations (Activity + location), apply ETL and finally monitoring dashboards.
 
 ## Technology used :
 
@@ -40,11 +40,4 @@ curl -i -X PUT -H "Accept:application/json" \
 	}
 '
 
-# To debugg : 
-docker-compose logs -f kafka-connect
 
-### Restart 
-docker-compose down
-docker-compose down -v 
-docker-compose down --remove-orphans
-docker system prune
