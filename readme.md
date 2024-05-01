@@ -19,6 +19,8 @@ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partit
 
 #### Create Kafka connector : 
 
+## Flush size we'll make it 100 for now, maybe change it later, we don't need to be very precise for this project.
+
 curl -i -X PUT -H "Accept:application/json" \
     -H  "Content-Type:application/json" http://localhost:8083/connectors/employees-s3-conn/config \
     -d '
@@ -29,7 +31,7 @@ curl -i -X PUT -H "Accept:application/json" \
 		"topics": "employees",
 		"s3.region": "eu-central-1",
 		"s3.bucket.name": "iceberg-track",
-		"flush.size": "1",
+		"flush.size": "100",
 		"storage.class": "io.confluent.connect.s3.storage.S3Storage",
 		"format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
 		"schema.generator.class": "io.confluent.connect.storage.hive.schema.DefaultSchemaGenerator",
