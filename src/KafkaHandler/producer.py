@@ -34,9 +34,7 @@ class KafkaProducer():
 
         self.string_serializer = StringSerializer('utf_8')
 
-        producer_conf = {'bootstrap.servers': '10.10.1.82:9092' }
-        if self.debugg :
-            producer_conf['debug'] = 'all'
+        producer_conf = {'bootstrap.servers': '10.10.1.82:9092', 'debug' : 'all'}
 
         self.producer = Producer(**producer_conf)
 

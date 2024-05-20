@@ -45,10 +45,12 @@ def main():
             
         # Prepare Kafka Producer to publish employees to Kafka topic:
         my_kafka_producer = KafkaProducer(topic = "employees", schema = "src/KafkaHandler/schema/employee.avsc", serializer_function = employee_to_dict)
-
+        
         # Send list of employees to our topic : 
+        # TODO very weird bug run with debuger and stop line at next line, then run it normally
         my_kafka_producer.produce(list_employees)
             
+        print("Employees have been successfully created and sent to Kafka topic!")
         
     # # Now we'll need to load available employees from database, then we'll simulate random activities for them :
     # query = 'SELECT * FROM "employees_activity"."employees" '
