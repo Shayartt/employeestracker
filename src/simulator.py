@@ -50,11 +50,11 @@ def main():
         my_kafka_producer.produce(list_employees)
             
         
-    # Now we'll need to load available employees from database, then we'll simulate random activities for them :
-    query = 'SELECT * FROM "employees_activity"."employees" '
-    df_employees = athena_handler.fetch(query)
+    # # Now we'll need to load available employees from database, then we'll simulate random activities for them :
+    # query = 'SELECT * FROM "employees_activity"."employees" '
+    # df_employees = athena_handler.fetch(query)
     
-    print(df_employees.head())
+    # print(df_employees.head())
     
     
 if __name__ == "__main__":

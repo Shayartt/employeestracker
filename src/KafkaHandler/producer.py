@@ -16,6 +16,7 @@ class KafkaProducer():
     topic: str
     schema: str # Path to avsc schema file
     serializer_function: callable
+    debugg : bool = False
     
     def __post_init__(self):
         """
@@ -33,11 +34,14 @@ class KafkaProducer():
 
         self.string_serializer = StringSerializer('utf_8')
 
-        producer_conf = {'bootstrap.servers': '10.10.1.82:9092'}
+        producer_conf = {'bootstrap.servers': '10.10.1.82:9092' }
+        if self.debugg :
+            producer_conf['debug'] = 'all'
 
-        self.producer = Producer(producer_conf)
+        self.producer = Producer(**producer_conf)
 
         print("Producing user records to topic {}. ^C to exit.".format(self.topic))
+        print(f"Using configuration : {producer_conf}")
        
     def delivery_report(err, msg):
         """
@@ -74,7 +78,8 @@ class KafkaProducer():
                 self.producer.produce(topic=self.topic,
                                 key=self.string_serializer(str(uuid4())),
                                 value=self.avro_serializer(employee, SerializationContext(self.topic, MessageField.VALUE)),
-                                on_delivery= self.delivery_report)
+                                on_delivery= self.delivery_report,
+                                callback=self.delivery_report)
             except KeyboardInterrupt:
                 break
             except ValueError:
