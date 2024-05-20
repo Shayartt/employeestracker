@@ -33,18 +33,7 @@ class Employee:
         """
         return f"Employee: {self.full_name} - {self.position} in {self.department.name} department"
     
-    def create(self) -> bool: 
-        """
-        This function will send the new employee to the correspondant topic in Kafka, this will be done by the producer.
-        
-        """
-        # TODO : Implement the producer
-        
-        print(self)
-        print(" - Status : Employee created!")
-        pass
-    
-def _to_dict(employee: Employee) -> dict: # Had to make it outside the class because of the uses in our Kafka producer
+def to_dict(employee: Employee, _) -> dict: # Had to make it outside the class because of the uses in our Kafka producer
         """
         Returns a dict representation of a Employee instance for serialization.
         """

@@ -2,8 +2,9 @@
 import random 
 
 # Second level import 
-from DataGenerator.Employee import Employee, Department
+from DataGenerator.Employee import Employee, Department, to_dict as employee_to_dict
 from DatabaseHandler import AthenaHandler
+from KafkaHandler.producer import KafkaProducer
 
 
 
@@ -30,6 +31,7 @@ def main():
     if is_create_employees.lower() == 'y': #  In case we want to create new employees
         
         num_employees = input("Enter the number of employees to generate: ")
+        list_employees = []
         
         for i in range(int(num_employees)):
             # Pick a random department : 
@@ -39,7 +41,14 @@ def main():
             # Create our employee :
             employee = Employee(i, department)
             
-            employee.create()
+            list_employees.append(employee)
+            
+        # Prepare Kafka Producer to publish employees to Kafka topic:
+        my_kafka_producer = KafkaProducer(topic = "employees", schema = "src/KafkaHandler/schema/employee.avsc", serializer_function = employee_to_dict)
+
+        # Send list of employees to our topic : 
+        my_kafka_producer.produce(list_employees)
+            
         
     # Now we'll need to load available employees from database, then we'll simulate random activities for them :
     query = 'SELECT * FROM "employees_activity"."employees" '

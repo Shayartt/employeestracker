@@ -97,7 +97,7 @@ def main():
     with open(schema) as f:
         schema_str = f.read()
 
-    schema_registry_conf = {'url': 'http://localhost:8081'}
+    schema_registry_conf = {'url': 'http://10.10.1.82:8081'}
     schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
     avro_serializer = AvroSerializer(schema_registry_client,
@@ -106,7 +106,7 @@ def main():
 
     string_serializer = StringSerializer('utf_8')
 
-    producer_conf = {'bootstrap.servers': 'localhost:9092'}
+    producer_conf = {'bootstrap.servers': '10.10.1.82:9092'}
 
     producer = Producer(producer_conf)
 

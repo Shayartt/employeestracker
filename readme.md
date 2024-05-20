@@ -12,7 +12,11 @@ Project Idea: Streaming employees informations (Activity + location), apply ETL 
 
 Apache Kafka & Kafka connect Installation : https://www.youtube.com/watch?v=_RdMCc4HGPY
 
-#### Setup 
+## TODO Stream via AWS Glue streaming later or EMR instead of KAFKA Connect (Limitation of Partitioning ect..)
+
+#### Setup (KAFKA)
+
+docker-compose up -d
 
 Connect into the docker image running zookeeper and run this command : 
 
@@ -32,13 +36,11 @@ curl -i -X PUT -H "Accept:application/json" \
 		"topics": "employees",
 		"s3.region": "eu-central-1",
 		"s3.bucket.name": "iceberg-track",
-		"flush.size": "100",
+		"flush.size": "1",
 		"storage.class": "io.confluent.connect.s3.storage.S3Storage",
 		"format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
 		"schema.generator.class": "io.confluent.connect.storage.hive.schema.DefaultSchemaGenerator",
 		"schema.compatibility": "NONE",
-        "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner"
+        "partitioner.class": "com.example.connect.s3.CustomPartitioner"
 	}
 '
-
-

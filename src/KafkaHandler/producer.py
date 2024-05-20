@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from uuid import uuid4
 
 # Second level imports:
-from src.DataGenerator.Employee import _to_dict as employee_to_dict
 
 # Third party imports:
 from six.moves import input
@@ -16,6 +15,7 @@ from confluent_kafka.schema_registry.avro import AvroSerializer
 class KafkaProducer():
     topic: str
     schema: str # Path to avsc schema file
+    serializer_function: callable
     
     def __post_init__(self):
         """
@@ -24,16 +24,16 @@ class KafkaProducer():
         with open(self.schema) as f:
             schema_str = f.read()
             
-        schema_registry_conf = {'url': 'http://localhost:8081'}
+        schema_registry_conf = {'url': 'http://10.10.1.82:8081'}
         schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
         self.avro_serializer = AvroSerializer(schema_registry_client,
                                         schema_str,
-                                        employee_to_dict)
+                                        self.serializer_function)
 
         self.string_serializer = StringSerializer('utf_8')
 
-        producer_conf = {'bootstrap.servers': 'localhost:9092'}
+        producer_conf = {'bootstrap.servers': '10.10.1.82:9092'}
 
         self.producer = Producer(producer_conf)
 
