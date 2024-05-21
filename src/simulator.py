@@ -53,10 +53,10 @@ def main():
         print("Employees have been successfully created and sent to Kafka topic!")
         
     # # Now we'll need to load available employees from database, then we'll simulate random activities for them :
-    # query = 'SELECT * FROM "employees_activity"."employees" '
-    # df_employees = athena_handler.fetch(query)
+    query = 'SELECT * FROM "employees_activity"."employees3" '
+    df_employees = athena_handler.fetch(query)
     
-    # print(df_employees.head())
+    print(df_employees.head())
     
     
 if __name__ == "__main__":

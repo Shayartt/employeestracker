@@ -7,6 +7,12 @@ Project Idea: Streaming employees informations (Activity + location), apply ETL 
     - Spark (EMR) for pipelines.
     - OpenSearch for logs.
 	- Kibana for visualization.
+	- AWS Lambda for scripting crone jobs
+
+
+## High-Level Diagram
+
+![High-Level Diagram](docs/diagrams/EmployeesTracker.drawio.png?raw=true "High-Level")
 
 ### Credits : 
 

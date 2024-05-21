@@ -10,7 +10,7 @@
 		{"name": "department_id",  "type": "int"},
 		{"name": "created_at",  "type": {
 			"type": "long",
-			"logicalType": "timestamp-millis"
+			"logicalType": "timestamp-micros"
 		  }
 		}
 	]
