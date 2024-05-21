@@ -1,5 +1,6 @@
 # First level imports
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from faker import Faker
 
 # Second level import
@@ -23,7 +24,7 @@ class Employee:
         # Generate a random full name
         self.full_name = fake.name()
         self.phone_number = fake.phone_number()
-        
+        self.created_at = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
         # Generate random job title
         self.position = self.department.get_random_job_title()
         
@@ -33,6 +34,7 @@ class Employee:
         """
         return f"Employee: {self.full_name} - {self.position} in {self.department.name} department"
     
+    
 def to_dict(employee: Employee, _) -> dict: # Had to make it outside the class because of the uses in our Kafka producer
         """
         Returns a dict representation of a Employee instance for serialization.
@@ -41,5 +43,6 @@ def to_dict(employee: Employee, _) -> dict: # Had to make it outside the class b
                     id=employee.id,
                     department_id=employee.department.id,
                     employee_position=employee.position,
-                    contact_info = employee.phone_number
+                    contact_info = employee.phone_number,
+                    created_at = employee.created_at
                     )

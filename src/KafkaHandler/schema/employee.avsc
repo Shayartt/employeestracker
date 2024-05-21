@@ -7,6 +7,11 @@
 		{"name": "full_name",  "type": "string"},
 		{"name": "employee_position",  "type": "string"},
 		{"name": "contact_info",  "type": "string"},
-		{"name": "department_id",  "type": "int"}
+		{"name": "department_id",  "type": "int"},
+		{"name": "created_at",  "type": {
+			"type": "long",
+			"logicalType": "timestamp-millis"
+		  }
+		}
 	]
 }
