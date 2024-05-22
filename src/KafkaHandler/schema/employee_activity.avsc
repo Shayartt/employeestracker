@@ -1,0 +1,21 @@
+{
+	"namespace": "example.avro",
+	"type": "record",
+	"name": "Employee_Activity",
+	"fields": [
+		{"name": "id", "type": "int"},
+		{"name": "employees_id",  "type": "int"},
+		{"name": "action",  "type": "string"},
+		{"name": "location",  "type": "string"},
+		{"name": "start_date",  "type": {
+			"type": "long",
+			"logicalType": "timestamp-micros"
+		  }
+		},
+		{"name": "end_date",  "type": {
+			"type": "long",
+			"logicalType": "timestamp-micros"
+		  }
+		}
+	]
+}
