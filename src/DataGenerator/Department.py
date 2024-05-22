@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import random 
 
 # Second level imports
-from .enums import possible_jobs
+from .enums import possible_jobs, possible_location_activities
 
 
 @dataclass
