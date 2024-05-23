@@ -9,7 +9,7 @@ from KafkaHandler.producer import KafkaProducer
 
 
 
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 
 
 def generate_activity() -> tuple:
@@ -73,26 +73,37 @@ def main():
     print("Start simulating activities for employees...")
     
     while True:
-        # Pick a random employee:
-        random_employee = random.randint(0, df_employees.shape[0]- 1)
+        
+        tmp_employee_activities = []
+        # For each iteration we'll generate 1000 random activities for employees:
+        for _ in range(1000):
+            # Pick a random employee:
+            random_employee = random.randint(0, df_employees.shape[0]- 1)
 
-        # Generate random activity:
-        location, activity = generate_activity()
-        
-        # Create activity employee :
-        my_employee_activity = EmployeesActivity(id = random_employee, employees_id = df_employees.iloc[random_employee]['id'], action = activity, location = location)
-        
-        # Print the activity:
-        print(str(my_employee_activity))
+            # Generate random activity:
+            location, activity = generate_activity()
+            
+            # Generate random boolean to decide if we want to generate random date or not:
+            random_date_bool = random.choice([True, False])
+            
+            # Create activity employee :
+            my_employee_activity = EmployeesActivity(id = random_employee, employees_id = df_employees.iloc[random_employee]['id'], action = activity, location = location, random_date = random_date_bool)
+            
+            tmp_employee_activities.append(my_employee_activity)
+    
         
         # Prepare Kafka Producer to publish employees to Kafka topic:
         my_kafka_producer = KafkaProducer(topic = "employees_activity", schema = "src/KafkaHandler/schema/employee_activity.avsc", serializer_function = employee_activity_to_dict)
         
-        # Send list of employees to our topic : 
-        my_kafka_producer.produce(employee, location, activity)
+        try : 
+            # Send list of employees to our topic : 
+            my_kafka_producer.produce(tmp_employee_activities)
+        except : 
+            print("Error while sending data to Kafka topic")
+            time.sleep(10)
         
-        # Sleep for 5 seconds:
-        time.sleep(5)
+        print("Activity has been successfully created and sent to Kafka topic!\n")
+        print("Press ctrl + c to stop the simulation")
     
     
 if __name__ == "__main__":

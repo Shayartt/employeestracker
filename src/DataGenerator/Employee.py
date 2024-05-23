@@ -1,6 +1,6 @@
 # First level imports
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import random
 from faker import Faker
 
@@ -45,12 +45,19 @@ class EmployeesActivity:
     employees_id : int
     action : str 
     location : str
+    random_date : bool = False
     
     def __post_init__(self):
         """
         Prepare start / end date in a timestamp format
         """
-        self.start_date = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
+        if not self.random_date:
+            self.start_date = int(datetime.now(tz=timezone.utc).timestamp() * 1000)
+        else:
+            # Generate random date in the previous 10 days : 
+            self.start_date = datetime.now(tz=timezone.utc) - timedelta(days=random.randint(1, 10))
+            self.start_date = int(self.start_date.timestamp() * 1000)
+    
         
         # Add random from 1 to 60 minutes : 
         self.end_date = self.start_date + (60 * 1000 * random.randint(1, 60))

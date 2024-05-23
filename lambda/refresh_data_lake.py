@@ -22,6 +22,12 @@ def update_data_lake(event,context):
     query_update_employees_hourly = "insert into employees_activity.iceberg_employees  SELECT id,full_name,employee_position,contact_info,department_id,CAST(created_at AS TIMESTAMP(6)) AS created_at FROM employees_activity.employees3 " + str(where_query)
     with pyathena_client.cursor() as cursor:
         cursor.execute(query_update_employees_hourly)
+        
+    where_query = " where start_date >= date_add('hour', -1, CURRENT_TIMESTAMP);"
+    
+    query_update_activity_logs_hourly = "insert into employees_activity.iceberg_activity_logs  SELECT id,employees_id,action,location,CAST(start_date AS TIMESTAMP(6)) AS start_date,CAST(end_date AS TIMESTAMP(6)) AS end_date FROM employees_activity.activity_logs " + str(where_query)
+    with pyathena_client.cursor() as cursor:
+        cursor.execute(query_update_activity_logs_hourly)
     
     # Add adittional updates queries here.
     
