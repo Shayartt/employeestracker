@@ -95,12 +95,8 @@ def main():
         # Prepare Kafka Producer to publish employees to Kafka topic:
         my_kafka_producer = KafkaProducer(topic = "employees_activity", schema = "src/KafkaHandler/schema/employee_activity.avsc", serializer_function = employee_activity_to_dict)
         
-        try : 
-            # Send list of employees to our topic : 
-            my_kafka_producer.produce(tmp_employee_activities)
-        except : 
-            print("Error while sending data to Kafka topic")
-            time.sleep(10)
+        # Send list of employees to our topic : 
+        my_kafka_producer.produce(tmp_employee_activities)
         
         print("Activity has been successfully created and sent to Kafka topic!\n")
         print("Press ctrl + c to stop the simulation")
