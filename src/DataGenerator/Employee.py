@@ -3,9 +3,11 @@ from dataclasses import dataclass
 from datetime import datetime, timezone, timedelta
 import random
 from faker import Faker
-
+from dotenv import load_dotenv
 # Second level import
 from .Department import Department, possible_location_activities
+
+load_dotenv()
 
 @dataclass
 class Employee:
@@ -58,11 +60,9 @@ class EmployeesActivity:
             self.start_date = datetime.now(tz=timezone.utc) - timedelta(days=random.randint(1, 10))
             self.start_date = int(self.start_date.timestamp() * 1000)
     
-        
         # Add random from 1 to 60 minutes : 
         self.end_date = self.start_date + (60 * 1000 * random.randint(1, 60))
 
-    
     def __str__(self) -> str:
         """
         Return the string representation of the employee activity

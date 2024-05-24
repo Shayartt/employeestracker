@@ -1,6 +1,7 @@
 # First level imports:
 from dataclasses import dataclass
 from uuid import uuid4
+import os
 
 # Second level imports:
 
@@ -25,7 +26,7 @@ class KafkaProducer():
         with open(self.schema) as f:
             schema_str = f.read()
             
-        schema_registry_conf = {'url': 'http://10.10.1.82:8081'}
+        schema_registry_conf = {'url': os.environ['KAFKA_SCHEMA_REGISTRY_URL']}
         schema_registry_client = SchemaRegistryClient(schema_registry_conf)
 
         self.avro_serializer = AvroSerializer(schema_registry_client,
@@ -34,7 +35,7 @@ class KafkaProducer():
 
         self.string_serializer = StringSerializer('utf_8')
 
-        producer_conf = {'bootstrap.servers': '10.10.1.82:9092', 'debug' : 'all'}
+        producer_conf = {'bootstrap.servers': os.environ['KAFKA_BOOTSTRAP_SERVERS'], 'debug' : 'all'}
 
         self.producer = Producer(**producer_conf)
 
@@ -60,22 +61,22 @@ class KafkaProducer():
         """
 
         if err is not None:
-            print("Delivery failed for Employee record {}: {}".format(msg.key(), err))
+            print("Delivery failed for record {}: {}".format(msg.key(), err))
             return
-        print('Employee record {} successfully produced to {} [{}] at offset {}'.format(
+        print('record {} successfully produced to {} [{}] at offset {}'.format(
             msg.key(), msg.topic(), msg.partition(), msg.offset()))   
      
-    def produce(self, employees: list):
+    def produce(self, list_of_messages: list):
         """
-        Produce employee to Kafka topic
+        Produce messages to Kafka topic
         """
         self.producer.poll(0.0)
 
-        for employee in employees:
+        for my_message in list_of_messages:
             try:
                 self.producer.produce(topic=self.topic,
                                 key=self.string_serializer(str(uuid4())),
-                                value=self.avro_serializer(employee, SerializationContext(self.topic, MessageField.VALUE)),
+                                value=self.avro_serializer(my_message, SerializationContext(self.topic, MessageField.VALUE)),
                                 on_delivery= self.delivery_report,
                                 callback=self.delivery_report)
             except KeyboardInterrupt:

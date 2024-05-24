@@ -1,5 +1,7 @@
 Project Idea: Streaming employees informations (Activity + location), apply ETL and finally monitoring dashboards.
 
+NOTE : Don't forget to update the .env and put your own configuration.
+
 ## Technology used :
 
     - Apache Iceberg ( AWS Glue + Athena) with S3 as storage system.
