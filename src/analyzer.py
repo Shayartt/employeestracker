@@ -26,6 +26,12 @@ if __name__ == "__main__":
     # Init Analyzer object : 
     analyzer = MyAnalyzer(spark)
     
+    # Get the activity details : 
+    analyzer.preprocessing_pipeline()
+    
+    # Generate Statistics : (They'll be inserted automatically to our openSearch Database)
+    analyzer.generate_statistics(save=True)
+    
     
     # Finish Spark Session : 
     spark.stop()

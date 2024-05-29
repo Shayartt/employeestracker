@@ -48,4 +48,4 @@ class AthenaHandler(DatabaseHandler):
         """
         Close the connection
         """
-        self.athena_client.close()
+        self.pyathena_client.close()

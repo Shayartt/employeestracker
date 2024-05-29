@@ -82,6 +82,9 @@ curl -i -X PUT -H "Accept:application/json" \
 	"timezone": "UTC"
   }'
 
+## To Run Spark analyzer Job : 
+spark-submit --jars tools/opensearch-spark-30_2.12-1.0.0.jar analyzer.py
+
 ## Conclusion : 
 
 The choice of technology was very good for this project, I really enjoyed learning this, however I have found some limitation using AWS Athena with iceberg like not being able to use the table property "sorted_by" to optimize more my IO and file sizes, however I was able to play around with the partitionning and compressions and file types and used the beautiful Iceberg's statistics to monitor the changes, this helps me undestand the importance of storage configuration and how they can optimize the cost and performance.
