@@ -86,6 +86,9 @@ class MyAnalyzer:
         ## Get the deparment name : 
         self.get_department_name()
         
+        # Remove column id from self._data, it's useless :
+        self._data = self._data.drop("id")
+        
         # Update tmp view : 
         self._data.createOrReplaceTempView("activity_logs") 
     
