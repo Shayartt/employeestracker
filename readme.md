@@ -1,4 +1,4 @@
-Project Idea: Streaming employees informations (Activity + location), apply ETL and finally monitoring dashboards.
+Project Idea: Streaming employees informations (Activity + location), apply ETL and finally some analytics pieplines.
 
 NOTE : Don't forget to update the .env and put your own configuration.
 
